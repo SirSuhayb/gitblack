@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: "gitBlack",
   description:
     "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
@@ -24,11 +25,13 @@ export const metadata: Metadata = {
     title: "gitBlack",
     description:
       "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
+    type: "website",
     images: [
       {
-        url: `${baseUrl}/api/og?day=1`,
+        url: "/api/og?day=1",
         width: 1200,
         height: 630,
+        alt: "gitBlack — Black is in everything.",
       },
     ],
   },
@@ -37,7 +40,7 @@ export const metadata: Metadata = {
     title: "gitBlack",
     description:
       "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
-    images: [`${baseUrl}/api/og?day=1`],
+    images: ["/api/og?day=1"],
   },
 };
 
