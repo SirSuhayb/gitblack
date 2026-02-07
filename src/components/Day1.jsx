@@ -316,18 +316,21 @@ export default function GitBlackDay1({ day = 1 } = {}) {
   const forkItems = [
     {
       name: "ISOTYPE",
+      url: "https://en.wikipedia.org/wiki/Isotype_(picture_language)",
       meta: "Otto Neurath • 1920s",
       description:
         "Visual language for universal communication. Neurath was a sociologist too — same mission, different continent."
     },
     {
       name: "Bauhaus Information Design",
+      url: "https://www.getty.edu/research/exhibitions_events/exhibitions/bauhaus/new_artist/history/",
       meta: "Moholy–Nagy, Gropius • 1919–1933",
       description:
         "The school known for blending science and art and leading the charge for modernism. Du Bois had inadvertently pioneered this practice 20 years prior under sociology."
     },
     {
       name: "VTC Du Bois Type Family",
+      url: "https://www.vocaltype.co/history-of/du-bois",
       meta: "Tre Seals • 2020",
       description:
         "Influenced by civil rights activism, Tre’s studio Vocal Type unified Du Bois’ work as a digital typeface."
@@ -479,6 +482,31 @@ export default function GitBlackDay1({ day = 1 } = {}) {
     )}&embeds[]=${encodeURIComponent(shareUrl)}`;
 
     try {
+      const { sdk } = await import("@farcaster/miniapp-sdk");
+      const inMiniApp =
+        typeof sdk.isInMiniApp === "function"
+          ? await sdk.isInMiniApp()
+          : false;
+
+      if (inMiniApp) {
+        if (typeof sdk.actions?.composeCast === "function") {
+          await sdk.actions.composeCast({
+            text: resolvedShareText,
+            embeds: [shareUrl]
+          });
+          return;
+        }
+        if (typeof sdk.actions?.openUrl === "function") {
+          await sdk.actions.openUrl(warpcastIntent);
+          return;
+        }
+        return;
+      }
+    } catch (error) {
+      // Ignore and fall back to regular sharing.
+    }
+
+    try {
       if (navigator.share) {
         await navigator.share(shareData);
         return;
@@ -528,15 +556,15 @@ export default function GitBlackDay1({ day = 1 } = {}) {
               <span>{formatTime(now).split(":")[0]}</span>
               <span className="font-mono">:</span>
               <span>{formatTime(now).split(":")[1]}</span>
-            </div>
-          </div>
         </div>
+      </div>
+    </div>
       </header>
 
       <div className="pt-20">
         {/* Page Title */}
         <div className="border-b border-[#d0d7de] px-4 py-4">
-          <div className="max-w-4xl mx-auto flex items-center justify-between">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
             <Link
               href="/"
               className="text-[#1f2328] text-2xl font-mono"
@@ -553,7 +581,7 @@ export default function GitBlackDay1({ day = 1 } = {}) {
               <span>28</span>
             </span>
           </div>
-        </div>
+          </div>
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         {/* Terminal Install Animation */}
@@ -1157,7 +1185,18 @@ export default function GitBlackDay1({ day = 1 } = {}) {
                 <div className="divide-y divide-[#d0d7de]">
                   {forkItems.map((fork) => (
                     <div key={fork.name} className="py-4">
-                      <p className="text-[#0969da] text-base">{fork.name}</p>
+                      {fork.url ? (
+                        <a
+                          href={fork.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[#0969da] text-base underline"
+                        >
+                          {fork.name}
+                        </a>
+                      ) : (
+                        <p className="text-[#0969da] text-base">{fork.name}</p>
+                      )}
                       <p className="text-[#57606a] text-base">{fork.meta}</p>
                       <p className="text-[#1f2328] text-base mt-2">{fork.description}</p>
                 </div>

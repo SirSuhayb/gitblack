@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOjU1NDMsInR5cGUiOiJhdXRoIiwia2V5IjoiMHhjMjIxOWQ2RjI4ODk5RkY0RGE1M0ZBOTM5MTRhY0UzMDY5YWIxNUVlIn0",
-    "payload": "eyJkb21haW4iOiJnaXRibGFjay52ZXJjZWwuYXBwIn0",
-    "signature": "ejX1864h2tmcc4G/G+UwH/Txl9FUL088IyladiQS2FpDhL67jD01KQWfpLVmYqDzfK+p+13Zt/66IxZIrg9LVxs="
+    "header": "",
+    "payload": "",
+    "signature": ""
   },
   "miniapp": {
     "version": "1",
@@ -15,7 +15,7 @@
     "splashBackgroundColor": "#000000",
     "subtitle": "Black history dependency tree",
     "description": "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
-    "heroImageUrl": "https://gitblack.vercel.app/ogImageApp.png",
+    "heroImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/ogImageApp.png",
     "primaryCategory": "education",
     "tags": [
       "black-history",
@@ -27,7 +27,7 @@
     "tagline": "Black is in everything.",
     "ogTitle": "gitBlack",
     "ogDescription": "Black History Month as a GitHub-style dependency tree.",
-    "ogImageUrl": "https://gitblack.vercel.app/ogImageApp.png"
+    "ogImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/api/og?day=1"
   }
 }
 
