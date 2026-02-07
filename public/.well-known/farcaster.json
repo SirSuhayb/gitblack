@@ -15,7 +15,7 @@
     "splashBackgroundColor": "#000000",
     "subtitle": "Black history dependency tree",
     "description": "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
-    "heroImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/ogImageApp.png",
+    "heroImageUrl": "https://gitblack.vercel.app/ogImageApp.png",
     "primaryCategory": "education",
     "tags": [
       "black-history",
@@ -27,7 +27,7 @@
     "tagline": "Black is in everything.",
     "ogTitle": "gitBlack",
     "ogDescription": "Black History Month as a GitHub-style dependency tree.",
-    "ogImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/api/og?day=1"
+    "ogImageUrl": "https://gitblack.vercel.app/ogImageApp.png"
   }
 }
 
