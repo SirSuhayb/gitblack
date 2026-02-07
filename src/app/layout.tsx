@@ -4,7 +4,7 @@ import "./globals.css";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL ??
-  "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app";
+  "https://gitblack.vercel.app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -10,7 +10,7 @@ type Params = {
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL ??
-  "https://gitblack-d59emm6mm-sirsuhaybs-projects.vercel.app";
+  "https://gitblack.vercel.app";
 
 export async function generateMetadata({
   params,
