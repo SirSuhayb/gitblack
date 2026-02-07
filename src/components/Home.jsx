@@ -16,9 +16,28 @@ const formatDate = (value) => {
 };
 
 export default function Home() {
-  const [view, setView] = useState("list");
+  const [view] = useState("list");
   const [activeIndex, setActiveIndex] = useState(0);
   const listRef = useRef(null);
+
+  useEffect(() => {
+    const signalReady = async () => {
+      try {
+        const { sdk } = await import("@farcaster/miniapp-sdk");
+        const inMiniApp =
+          typeof sdk.isInMiniApp === "function"
+            ? await sdk.isInMiniApp()
+            : false;
+        if (inMiniApp) {
+          await sdk.actions.ready();
+        }
+      } catch (error) {
+        // Ignore if not running inside a mini app environment.
+      }
+    };
+
+    signalReady();
+  }, []);
 
   const orderedCommits = useMemo(() => {
     return [...commits].sort((a, b) => a.day - b.day);
@@ -31,11 +50,45 @@ export default function Home() {
     const elements = listRef.current.querySelectorAll("[data-animate]");
     if (!elements.length) return;
 
+    const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const scrambleText = (element) => {
+      const finalText = element.getAttribute("data-text") || "";
+      const duration = 450;
+      const start = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const revealCount = Math.floor(finalText.length * progress);
+        const nextText =
+          finalText
+            .split("")
+            .map((char, index) => {
+              if (char === " ") return " ";
+              if (index < revealCount) return char;
+              return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+            })
+            .join("");
+
+        element.textContent = nextText;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          element.textContent = finalText;
+        }
+      };
+
+      requestAnimationFrame(tick);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            const textTarget = entry.target.querySelector("[data-text]");
+            if (textTarget) {
+              scrambleText(textTarget);
+            }
             observer.unobserve(entry.target);
           }
         });
@@ -82,100 +135,48 @@ export default function Home() {
           </p>
         </section>
 
-        <div className="flex items-center justify-end gap-2 text-xs uppercase tracking-wide border-b border-[#d0d7de] pb-2">
-          <button
-            type="button"
-            onClick={() => setView("list")}
-            className={`${
-              view === "list" ? "underline" : ""
-            } text-[#0f172a]`}
-          >
-            List
-          </button>
-          <span className="text-[#0f172a]">or</span>
-          <button
-            type="button"
-            onClick={() => setView("photo")}
-            className={`${
-              view === "photo" ? "underline" : ""
-            } text-[#0f172a]`}
-          >
-            Photo
-          </button>
-        </div>
+        <section
+          ref={listRef}
+          className="divide-y divide-[#d0d7de] border-b border-[#d0d7de]"
+        >
+          {orderedCommits.map((commit, index) => {
+            const isApproved = commit.day === 1;
+            const href = isApproved
+              ? `/day/${commit.day}/${slugifyInventor(commit.inventor.name)}`
+              : "#";
+            const baseContribution =
+              commit.patent.title?.split(" — ")[0] ?? "Contribution";
+            const maskedContribution = baseContribution.replace(/[^ ]/g, "?");
+            const contribution = isApproved ? baseContribution : maskedContribution;
 
-        {view === "list" && (
-          <section
-            ref={listRef}
-            className="divide-y divide-[#d0d7de] border-b border-[#d0d7de]"
-          >
-            {orderedCommits.map((commit, index) => {
-              const isApproved = commit.day === 1;
-              const href = isApproved
-                ? `/day/${commit.day}/${slugifyInventor(commit.inventor.name)}`
-                : "#";
-
-              return (
-                <Link
-                  key={commit.day}
-                  href={href}
-                  onClick={() => setActiveIndex(index)}
-                  data-animate
-                  className={`w-full flex items-center justify-between py-3 text-left animate-in ${
-                    isApproved ? "" : "cursor-not-allowed"
-                  }`}
-                >
-                  <div className="text-sm">
-                    <div className={`text-[#0f172a] ${vtcDuBois.className}`}>
-                      {isApproved ? commit.inventor.name : "???"}
-                    </div>
+            return (
+              <Link
+                key={commit.day}
+                href={href}
+                onClick={() => setActiveIndex(index)}
+                data-animate
+                className={`w-full flex items-center justify-between py-3 text-left animate-in ${
+                  isApproved ? "" : "cursor-not-allowed"
+                }`}
+              >
+                <div className="text-sm">
+                  <div
+                    className="text-[#0f172a] font-mono"
+                    data-text={contribution}
+                  >
+                    {contribution}
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-[#0f172a]">
-                    <span>{commit.inventor.profession || "null value"}</span>
-                    <span aria-hidden>→</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </section>
-        )}
-
-        {view === "photo" && activeCommit && (
-          <section className="space-y-2">
-            <div className="border border-[#d0d7de] bg-[#f8fafc]">
-              {activeCommit.inventor.photoUrl ? (
-                <img
-                  src={activeCommit.inventor.photoUrl}
-                  alt={activeCommit.inventor.name}
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="h-64 flex items-center justify-center text-[#64748b]">
-                  No photo
                 </div>
-              )}
-            </div>
-            <div className="flex items-center justify-between text-xs text-[#0f172a] border-b border-[#d0d7de] pb-2">
-              {activeCommit.day === 1 ? (
-                <Link
-                  href={`/day/${activeCommit.day}/${slugifyInventor(
-                    activeCommit.inventor.name
-                  )}`}
-                  className={vtcDuBois.className}
-                >
-                  {activeCommit.inventor.name}
-                </Link>
-              ) : (
-                <span className={vtcDuBois.className}>???</span>
-              )}
-              <span>{activeCommit.inventor.profession || "null value"}</span>
-              <span aria-hidden>→</span>
-            </div>
-          </section>
-        )}
+                <span className="text-xs text-[#0f172a]" aria-hidden>
+                  →
+                </span>
+              </Link>
+            );
+          })}
+        </section>
       </main>
     </div>
   );
 }
+
 

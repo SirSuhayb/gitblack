@@ -13,14 +13,14 @@
     "buttonTitle": "trace history",
     "splashImageUrl": "https://gitblack.vercel.app/icon.svg",
     "splashBackgroundColor": "#000000",
-    "subtitle": "Black history as a dependency tree",
+    "subtitle": "Black history dependency tree",
     "description": "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
     "heroImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/ogImageApp.png",
     "primaryCategory": "education",
     "tags": [
-      "black history",
+      "black-history",
       "design",
-      "data visualization",
+      "data-visualization",
       "farcaster",
       "culture"
     ],
