@@ -55,13 +55,13 @@ export default function RootLayout({
     version: "1",
     imageUrl: `${baseUrl}/ogImageApp.png`,
     button: {
-      title: "Open",
+      title: "trace history",
       action: {
         type: "launch_frame",
         name: "gitBlack",
         url: baseUrl,
         splashImageUrl: `${baseUrl}/icon.svg`,
-        splashBackgroundColor: "#0d1117",
+        splashBackgroundColor: "#000000",
       },
     },
   };
