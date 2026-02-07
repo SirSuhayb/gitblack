@@ -15,9 +15,23 @@ const formatDate = (value) => {
   return formatter.format(date).toLowerCase();
 };
 
+const formatTimestampDate = (value) => {
+  const month = String(value.getMonth() + 1).padStart(2, "0");
+  const day = String(value.getDate()).padStart(2, "0");
+  const year = value.getFullYear();
+  return `${month}.${day}.${year}`;
+};
+
+const formatTimestampTime = (value) => {
+  const hours = String(value.getHours()).padStart(2, "0");
+  const minutes = String(value.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+};
+
 export default function Home() {
   const [view] = useState("list");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [now, setNow] = useState(() => new Date());
   const listRef = useRef(null);
 
   useEffect(() => {
@@ -37,6 +51,13 @@ export default function Home() {
     };
 
     signalReady();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   const orderedCommits = useMemo(() => {
@@ -108,7 +129,14 @@ export default function Home() {
             <div className={`text-2xl ${vtcDuBois.className}`}>gitBlack</div>
             <div className="text-[#64748b]">tracing America&#39;s foundation</div>
           </div>
-          <div className="text-[#0f172a]">{formatDate()}</div>
+          <div className={`text-[#64748b] text-right ${vtcDuBois.className} font-bold`}>
+            <div>{formatTimestampDate(now)}</div>
+            <div>
+              <span>{formatTimestampTime(now).split(":")[0]}</span>
+              <span className="font-mono">:</span>
+              <span>{formatTimestampTime(now).split(":")[1]}</span>
+            </div>
+          </div>
         </div>
       </header>
 
