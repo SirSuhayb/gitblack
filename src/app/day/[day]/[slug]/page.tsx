@@ -29,6 +29,9 @@ export async function generateMetadata({
     : "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.";
 
   const ogImage = `/api/og?day=${commit?.day ?? 1}`;
+  const ogUrl = commit
+    ? `/day/${commit.day}/${slugifyInventor(commit.inventor.name)}`
+    : "/";
 
   return {
     title,
@@ -38,6 +41,8 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
+      siteName: "gitBlack",
+      url: ogUrl,
       images: [
         {
           url: ogImage,

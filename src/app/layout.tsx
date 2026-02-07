@@ -26,6 +26,8 @@ export const metadata: Metadata = {
     description:
       "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
     type: "website",
+    siteName: "gitBlack",
+    url: "/",
     images: [
       {
         url: "/api/og?day=1",
