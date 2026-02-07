@@ -9,6 +9,7 @@ import { vtcDuBois } from "../lib/fonts";
 
 export default function GitBlackDay1({ day = 1 } = {}) {
   const [installed, setInstalled] = useState(false);
+  const [now, setNow] = useState(() => new Date());
   const [activeChart, setActiveChart] = useState(0);
   const [activeSubChart, setActiveSubChart] = useState(0);
   const [readmeTab, setReadmeTab] = useState("overview");
@@ -22,6 +23,13 @@ export default function GitBlackDay1({ day = 1 } = {}) {
   useEffect(() => {
     const timer = setTimeout(() => setInstalled(true), 1500);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -490,38 +498,62 @@ export default function GitBlackDay1({ day = 1 } = {}) {
     window.open(warpcastIntent, "_blank", "noopener,noreferrer");
   };
 
+  const formatDate = (value) => {
+    const month = String(value.getMonth() + 1).padStart(2, "0");
+    const day = String(value.getDate()).padStart(2, "0");
+    const year = value.getFullYear();
+    return `${month}.${day}.${year}`;
+  };
+
+  const formatTime = (value) => {
+    const hours = String(value.getHours()).padStart(2, "0");
+    const minutes = String(value.getMinutes()).padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
   return (
-    <div className="min-h-screen bg-[#f6f5f1] text-[#1f2328] font-sans">
+    <div className="min-h-screen bg-white text-[#1f2328] font-sans">
       {/* Header */}
-      <header className="border-b border-[#d0d7de] px-4 py-3">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex flex-col">
-            <Link href="/" className="text-xl font-bold">
-              <span className="text-[#1f2328]">git</span>
-              <span className="text-[#6f5bd4]">Black</span>
+      <header className="fixed top-0 left-0 right-0 z-10 border-b border-[#d0d7de] bg-white px-4 py-4">
+        <div className="max-w-4xl mx-auto flex items-center justify-between text-sm">
+          <div>
+            <Link href="/" className={`text-2xl ${vtcDuBois.className}`}>
+              gitBlack
             </Link>
-            <span className="text-[#57606a] text-sm">
-              tracing America&#39;s foundation
-            </span>
+            <div className="text-[#64748b]">tracing America&#39;s foundation</div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[#57606a] text-xs">{commit.date}</span>
+          <div className={`text-[#64748b] text-right ${vtcDuBois.className} font-bold`}>
+            <div>{formatDate(now)}</div>
+            <div>
+              <span>{formatTime(now).split(":")[0]}</span>
+              <span className="font-mono">:</span>
+              <span>{formatTime(now).split(":")[1]}</span>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Page Title */}
-      <div className="border-b border-[#d0d7de] px-4 py-3">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="text-[#57606a] text-xl" aria-label="Back">
-            ←
-          </Link>
-          <h1 className="text-xl font-semibold text-[#1f2328]">
-            Sociology as Design
-          </h1>
-          <span className="text-[#57606a] text-sm">day {commit.day}</span>
+      <div className="pt-20">
+        {/* Page Title */}
+        <div className="border-b border-[#d0d7de] px-4 py-4">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <Link
+              href="/"
+              className="text-[#1f2328] text-2xl font-mono"
+              aria-label="Back"
+            >
+              ←
+            </Link>
+            <h1 className={`text-xl font-normal text-[#1f2328] ${vtcDuBois.className}`}>
+              Sociology as Design
+            </h1>
+            <span className={`text-[#1f2328] text-xl font-normal ${vtcDuBois.className}`}>
+              <span>1</span>
+              <span className="font-mono">/</span>
+              <span>28</span>
+            </span>
+          </div>
         </div>
-      </div>
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         {/* Terminal Install Animation */}
@@ -617,25 +649,25 @@ export default function GitBlackDay1({ day = 1 } = {}) {
                 <div className="p-4 text-center">
                   <div className={`text-2xl font-bold text-[#1f2328] ${vtcDuBois.className}`}>
                     {commit.stats.charts}
-                  </div>
+                    </div>
                   <div className="text-xs text-[#57606a]">Charts Created</div>
                 </div>
                 <div className="p-4 text-center">
                   <div className={`text-2xl font-bold text-[#6f5bd4] ${vtcDuBois.className}`}>
                     {commit.stats.months}
-                  </div>
+              </div>
                   <div className="text-xs text-[#57606a]">Months to Make</div>
-                </div>
+              </div>
                 <div className="p-4 text-center">
                   <div className={`text-2xl font-bold text-[#1f883d] ${vtcDuBois.className}`}>
                     20+
-                  </div>
+                </div>
                   <div className="text-xs text-[#57606a]">Years Before Bauhaus</div>
                 </div>
                 <div className="p-4 text-center">
                   <div className={`text-2xl font-bold text-[#57606a] ${vtcDuBois.className}`}>
                     118
-                  </div>
+                </div>
                   <div className="text-xs text-[#57606a]">Years Forgotten</div>
                 </div>
               </div>
@@ -1204,6 +1236,7 @@ export default function GitBlackDay1({ day = 1 } = {}) {
           </>
         )}
       </main>
+      </div>
 
       {/* Footer */}
       <footer className="border-t border-[#d0d7de] px-4 py-6">

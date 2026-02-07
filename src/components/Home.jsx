@@ -102,17 +102,17 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-[#0f172a]">
-      <header className="border-b border-[#d0d7de] px-4 py-4">
+      <header className="fixed top-0 left-0 right-0 z-10 border-b border-[#d0d7de] bg-white px-4 py-4">
         <div className="max-w-md mx-auto flex items-center justify-between text-sm">
           <div>
-            <div className="font-semibold">gitBlack</div>
+            <div className={`text-2xl ${vtcDuBois.className}`}>gitBlack</div>
             <div className="text-[#64748b]">tracing America&#39;s foundation</div>
           </div>
           <div className="text-[#0f172a]">{formatDate()}</div>
         </div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-md mx-auto px-4 pb-8 pt-28 space-y-8">
         <section className="space-y-4">
           <div
             className={`text-3xl leading-tight text-[#0f172a] ${vtcDuBois.className}`}
