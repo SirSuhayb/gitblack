@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from "next/link";
 import { commits as allCommits } from "../data/commits";
 import { scanSignals } from "../lib/scanner";
 import { fetchFollowedChannels } from "../lib/farcaster";
@@ -495,10 +496,10 @@ export default function GitBlackDay1({ day = 1 } = {}) {
       <header className="border-b border-[#d0d7de] px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-xl font-bold">
+            <Link href="/" className="text-xl font-bold">
               <span className="text-[#1f2328]">git</span>
               <span className="text-[#6f5bd4]">Black</span>
-            </span>
+            </Link>
             <span className="text-[#57606a] text-sm">
               tracing America&#39;s foundation
             </span>
@@ -512,9 +513,9 @@ export default function GitBlackDay1({ day = 1 } = {}) {
       {/* Page Title */}
       <div className="border-b border-[#d0d7de] px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <button className="text-[#57606a] text-xl" aria-label="Back">
+          <Link href="/" className="text-[#57606a] text-xl" aria-label="Back">
             ←
-          </button>
+          </Link>
           <h1 className="text-xl font-semibold text-[#1f2328]">
             Sociology as Design
           </h1>

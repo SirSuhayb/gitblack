@@ -1,7 +1,7 @@
-import Day1 from "@/components/Day1";
+import GitBlackHome from "@/components/Home";
 
 export default function Home() {
   return (
-    <Day1 />
+    <GitBlackHome />
   );
 }

@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Day1 from "@/components/Day1";
 import { getCommitByDay, slugifyInventor } from "@/data/commits";
 
@@ -7,8 +7,9 @@ type Params = {
   slug: string;
 };
 
-export default function DayPage({ params }: { params: Params }) {
-  const dayNumber = Number(params.day);
+export default async function DayPage({ params }: { params: Promise<Params> }) {
+  const resolvedParams = await params;
+  const dayNumber = Number(resolvedParams.day);
   if (!Number.isFinite(dayNumber)) {
     notFound();
   }
@@ -19,8 +20,8 @@ export default function DayPage({ params }: { params: Params }) {
   }
 
   const expectedSlug = slugifyInventor(commit.inventor.name);
-  if (params.slug !== expectedSlug) {
-    notFound();
+  if (resolvedParams.slug !== expectedSlug) {
+    redirect(`/day/${commit.day}/${expectedSlug}`);
   }
 
   return <Day1 day={commit.day} />;
