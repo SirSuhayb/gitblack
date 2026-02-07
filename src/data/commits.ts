@@ -75,6 +75,9 @@ export const commits: Commit[] = [
       death: "August 27, 1963",
       birthplace: "Great Barrington, Massachusetts",
       profession: "Sociologist, Designer, Data Scientist, Activist",
+      photoUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/W.E.B._Du_Bois_by_James_E._Purdy%2C_1907.jpg/1280px-W.E.B._Du_Bois_by_James_E._Purdy%2C_1907.jpg",
+      photoCredit: "Photo: James E. Purdy, 1907 — Wikimedia Commons ↗",
     },
     patent: {
       title: "The Exhibit of American Negroes — 63 Hand-Drawn Data Visualizations",
@@ -1278,6 +1281,14 @@ export const commits: Commit[] = [
 // Export helper to get commit by day
 export const getCommitByDay = (day: number): Commit | undefined => {
   return commits.find(c => c.day === day);
+};
+
+export const slugifyInventor = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
 };
 
 // Export helper to get current day's commit (based on BHM date)

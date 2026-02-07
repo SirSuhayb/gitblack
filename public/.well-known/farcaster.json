@@ -1,0 +1,31 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "gitBlack",
+    "iconUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/icon.svg",
+    "homeUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app",
+    "splashImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/icon.svg",
+    "splashBackgroundColor": "#0d1117",
+    "subtitle": "Black history as a dependency tree",
+    "description": "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
+    "heroImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/ogImageApp.png",
+    "primaryCategory": "education",
+    "tags": [
+      "black history",
+      "design",
+      "data visualization",
+      "farcaster",
+      "culture"
+    ],
+    "tagline": "Black is in everything.",
+    "ogTitle": "gitBlack",
+    "ogDescription": "Black History Month as a GitHub-style dependency tree.",
+    "ogImageUrl": "https://gitblack-ltjx0m4nr-sirsuhaybs-projects.vercel.app/api/og?day=1"
+  }
+}
+

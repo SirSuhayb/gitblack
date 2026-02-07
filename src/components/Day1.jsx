@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { commits as allCommits } from "../data/commits";
 import { scanSignals } from "../lib/scanner";
 import { fetchFollowedChannels } from "../lib/farcaster";
+import { vtcDuBois } from "../lib/fonts";
 
-export default function GitBlackDay1() {
+export default function GitBlackDay1({ day = 1 } = {}) {
   const [installed, setInstalled] = useState(false);
   const [activeChart, setActiveChart] = useState(0);
   const [activeSubChart, setActiveSubChart] = useState(0);
@@ -64,12 +65,14 @@ export default function GitBlackDay1() {
     };
   }, []);
 
+  const baseCommit = allCommits.find((entry) => entry.day === day);
   const commit = {
-    day: 1,
+    day: baseCommit?.day ?? day,
     date: "February 1, 2026",
     work: {
-      title: "The Exhibit of American Negroes",
-      subtitle: "63 Hand-Drawn Data Visualizations",
+      title:
+        baseCommit?.patent?.title?.split(" — ")[0] ??
+        "The Exhibit of American Negroes",
       venue: "Exposition Universelle, Paris",
       created: "December 1899 — April 1900",
       displayed: "April 15 — November 12, 1900",
@@ -82,13 +85,19 @@ export default function GitBlackDay1() {
       location: "Library of Congress, Prints and Photographs Division"
     },
     inventor: {
-      name: "W.E.B. Du Bois",
-      born: "February 23, 1868",
-      died: "August 27, 1963",
-      birthplace: "Great Barrington, Massachusetts",
-      profession: "Sociologist, Designer, Data Scientist",
+      name: baseCommit?.inventor?.name ?? "W.E.B. Du Bois",
+      born: baseCommit?.inventor?.birth ?? "February 23, 1868",
+      died: baseCommit?.inventor?.death ?? "August 27, 1963",
+      birthplace: baseCommit?.inventor?.birthplace ?? "Great Barrington, Massachusetts",
+      profession: baseCommit?.inventor?.profession ?? "Sociologist, Designer, Data Scientist",
       collaborators: "Students and alumni of Atlanta University",
-      timeToCreate: "~4 months"
+      timeToCreate: "~4 months",
+      photoUrl:
+        baseCommit?.inventor?.photoUrl ??
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/W.E.B._Du_Bois_by_James_E._Purdy%2C_1907.jpg/1280px-W.E.B._Du_Bois_by_James_E._Purdy%2C_1907.jpg",
+      photoCredit:
+        baseCommit?.inventor?.photoCredit ??
+        "Photo: James E. Purdy, 1907 — Wikimedia Commons ↗"
     },
     problem: "No visual language existed to communicate the humanity, progress, and systemic oppression of Black Americans to a global audience. Statistics were dry. Racist caricatures dominated popular imagery. The truth needed a form.",
     designDecisions: [
@@ -446,8 +455,6 @@ export default function GitBlackDay1() {
 
   const activeLocUrl = getLocImageUrl(commit.charts[activeChart]?.loc);
 
-  const duBoisPortraitUrl =
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/W.E.B._Du_Bois_by_James_E._Purdy%2C_1907.jpg/1280px-W.E.B._Du_Bois_by_James_E._Purdy%2C_1907.jpg";
 
   const handleShare = async () => {
     const shareUrl = window.location.href;
@@ -585,21 +592,21 @@ export default function GitBlackDay1() {
                 <div className="-mx-4 bg-[#f6f5f1] overflow-hidden">
                   {!portraitError ? (
                     <img
-                      src={duBoisPortraitUrl}
-                      alt="W.E.B. Du Bois portrait"
+                      src={commit.inventor.photoUrl}
+                      alt={`${commit.inventor.name} portrait`}
                       className="block w-full h-80 object-cover"
                       loading="lazy"
                       onError={() => setPortraitError(true)}
                     />
                   ) : (
                     <div className="p-8 text-center text-[#6f5bd4] font-semibold">
-                      W.E.B.
+                      {commit.inventor.name}
                 </div>
                   )}
               </div>
-                {!portraitError && (
+                {!portraitError && commit.inventor.photoCredit && (
                   <p className="text-[11px] text-[#57606a]">
-                    Photo: James E. Purdy, 1907 — Wikimedia Commons ↗
+                    {commit.inventor.photoCredit}
                   </p>
                 )}
               </div>
@@ -607,19 +614,27 @@ export default function GitBlackDay1() {
               {/* Stats */}
               <div className="grid grid-cols-4 divide-x divide-[#d0d7de]">
                 <div className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[#1f2328]">{commit.stats.charts}</div>
+                  <div className={`text-2xl font-bold text-[#1f2328] ${vtcDuBois.className}`}>
+                    {commit.stats.charts}
+                  </div>
                   <div className="text-xs text-[#57606a]">Charts Created</div>
                 </div>
                 <div className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[#6f5bd4]">{commit.stats.months}</div>
+                  <div className={`text-2xl font-bold text-[#6f5bd4] ${vtcDuBois.className}`}>
+                    {commit.stats.months}
+                  </div>
                   <div className="text-xs text-[#57606a]">Months to Make</div>
                 </div>
                 <div className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[#1f883d]">20+</div>
+                  <div className={`text-2xl font-bold text-[#1f883d] ${vtcDuBois.className}`}>
+                    20+
+                  </div>
                   <div className="text-xs text-[#57606a]">Years Before Bauhaus</div>
                 </div>
                 <div className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[#57606a]">118</div>
+                  <div className={`text-2xl font-bold text-[#57606a] ${vtcDuBois.className}`}>
+                    118
+                  </div>
                   <div className="text-xs text-[#57606a]">Years Forgotten</div>
                 </div>
               </div>
@@ -885,7 +900,7 @@ export default function GitBlackDay1() {
                 className={`${sectionStyles.header} w-full text-left`}
               >
                 <div className="flex-1 text-left">
-                  <h3 className="text-sm font-mono tracking-wide text-[#1f2328] uppercase">
+                <h3 className="text-sm font-mono tracking-wide text-[#1f2328] uppercase">
                     Selected Charts
                 </h3>
                   <p className="text-[#57606a] text-xs">
