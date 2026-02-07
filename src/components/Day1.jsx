@@ -1227,12 +1227,14 @@ export default function GitBlackDay1({ day = 1 } = {}) {
             </div>
 
             {/* Navigation */}
+            {/*
             <div className="flex justify-end items-center mt-6 pt-6 border-t border-[#d0d7de]">
               <button className="flex items-center gap-2 text-[#57606a] hover:text-[#1f2328] transition-colors">
                 <span className="text-sm">Day 2: Marie Van Brittan Brown</span>
                 <span>→</span>
               </button>
             </div>
+            */}
           </>
         )}
       </main>
