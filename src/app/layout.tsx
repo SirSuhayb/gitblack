@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     url: "/",
     images: [
       {
-        url: "/api/og?day=1",
+        url: "/ogImageApp.png",
         width: 1200,
         height: 630,
         alt: "gitBlack — Black is in everything.",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "gitBlack",
     description:
       "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.",
-    images: ["/api/og?day=1"],
+    images: ["/ogImageApp.png"],
   },
 };
 

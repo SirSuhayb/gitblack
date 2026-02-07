@@ -28,7 +28,7 @@ export async function generateMetadata({
     ? `${commit.inventor.name} — ${commit.patent.title}`
     : "A Farcaster mini app reframing Black History Month as a GitHub-style dependency tree.";
 
-  const ogImage = `/api/og?day=${commit?.day ?? 1}`;
+  const ogImage = "/ogImageApp.png";
   const ogUrl = commit
     ? `/day/${commit.day}/${slugifyInventor(commit.inventor.name)}`
     : "/";
